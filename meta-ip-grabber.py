@@ -1,11 +1,22 @@
 import requests
 import time
+import os
+from colorama import init, Fore, Style
+
+init()  # Initialize colorama
 
 
-def type_writer(text):
+def clear_terminal():
+    if os.name == "nt":  # For Windows
+        os.system("cls")
+    else:  # For Linux and Mac
+        os.system("clear")
+
+
+def type_writer(text, delay=0.05):
     for char in text:
         print(char, end='', flush=True)
-        time.sleep(0.05)
+        time.sleep(delay)
     print()
 
 
@@ -22,13 +33,14 @@ def get_own_ip_info():
         zip_code = data["zip"]
         latitude = data["lat"]
         longitude = data["lon"]
-        print(f"IP: {ip}")
+
+        print(f"{Fore.GREEN}IP: {ip}")
         print(f"Country: {country}")
         print(f"Region: {region}")
         print(f"City: {city}")
         print(f"ZIP Code: {zip_code}")
         print(f"Latitude: {latitude}")
-        print(f"Longitude: {longitude}")
+        print(f"Longitude: {longitude}{Style.RESET_ALL}")
     else:
         print("Failed to retrieve IP information.")
 
@@ -46,35 +58,51 @@ def get_ip_info(ip_address):
         zip_code = data["zip"]
         latitude = data["lat"]
         longitude = data["lon"]
-        print(f"IP: {ip}")
+
+        print(f"{Fore.GREEN}IP: {ip}")
         print(f"Country: {country}")
         print(f"Region: {region}")
         print(f"City: {city}")
         print(f"ZIP Code: {zip_code}")
         print(f"Latitude: {latitude}")
-        print(f"Longitude: {longitude}")
+        print(f"Longitude: {longitude}{Style.RESET_ALL}")
     else:
         print("Failed to retrieve IP information.")
 
 
-# Typewriter animation for welcome message
-welcome_message = "Welcome to IP Information Bot"
-type_writer(welcome_message)
-time.sleep(1)
-coderet_name = "Coderet D Looper"
-print(f"Presented by: {coderet_name}")
-print()
+# Clear terminal and set color for welcome message
+clear_terminal()
+print(f"{Fore.CYAN}")
+type_writer("░█████╗░░█████╗░██████╗░███████╗██████╗░███████╗████████╗")
+type_writer("██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝╚══██╔══╝")
+type_writer("██║░░╚═╝██║░░██║██║░░██║█████╗░░██████╔╝█████╗░░░░░██║░░░")
+type_writer("██║░░██╗██║░░██║██║░░██║██╔══╝░░██╔══██╗██╔══╝░░░░░██║░░░")
+type_writer("╚█████╔╝╚█████╔╝██████╔╝███████╗██║░░██║███████╗░░░██║░░░")
+type_writer("░╚════╝░░╚════╝░╚═════╝░╚══════╝╚═╝░░╚═╝╚══════╝░░░╚═╝░░░")
+print(f"{Style.RESET_ALL}")
 
 # Main program
-print("IP Information Bot")
-print("1. Get information about your own IP address.")
-print("2. Get information about a targeted IP address.")
-choice = input("Enter your choice (1 or 2): ")
+print(f"{Fore.YELLOW}IP Information Bot")
+type_writer("1. Get information about your own IP address.", delay=0.03)
+type_writer("2. Get information about a targeted IP address.", delay=0.03)
+print(Style.RESET_ALL)
+choice = input(f"{Fore.YELLOW}Enter your choice (1 or 2): ")
 
 if choice == "1":
+    clear_terminal()
+    print("Retrieving information...\n")
+    time.sleep(1)
     get_own_ip_info()
 elif choice == "2":
     target_ip = input("Enter the IP address you want to get information about: ")
+    clear_terminal()
+    print("Retrieving information...\n")
+    time.sleep(1)
     get_ip_info(target_ip)
 else:
     print("Invalid choice. Please try again.")
+
+print(f"{Fore.MAGENTA}")
+type_writer("Thank you for using IP Information Bot!", delay=0.03)
+type_writer("Goodbye!", delay=0.03)
+print(Style.RESET_ALL)
